@@ -63,7 +63,7 @@ Created as part of **Phase #2, Round 12 Frontend Internship**, focusing on desig
 ### 4. How to Run the Project
 
 ```bash
-git clone https://github.com/<your-username>/Etoile-Restaurant.git
+git clone https://github.com/mennaomar777/Etoile-Restaurant.git
 npm install
 npm run dev
 ```
