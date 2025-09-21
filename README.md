@@ -82,3 +82,7 @@ npm run dev
 
 - Inspired by the Frontend Internship guidelines and real-world restaurant website designs.
 - Thanks to the internship team for this creative challenge!
+
+## 8. Live Demo
+
+Check out the live site: [https://etoile-restaurant-ashy.vercel.app/](https://etoile-restaurant-ashy.vercel.app/)
