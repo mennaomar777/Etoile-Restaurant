@@ -4,6 +4,8 @@ import { supabase } from "../../Helper/supabase-client";
 import { useCart } from "../../context/cartContext";
 import { toast } from "react-toastify";
 import { useUser } from "../../context/userContext";
+import { motion } from "framer-motion";
+
 export default function CategoryItems() {
   const { addToCart } = useCart();
   const navigate = useNavigate();
@@ -48,13 +50,19 @@ export default function CategoryItems() {
           ← Back to Menu
         </Link>
 
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-center mb-12 text-[#2b2a27] tracking-tight">
+        <motion.h2
+          className="text-4xl md:text-5xl font-serif font-bold text-center mb-12 text-[#2b2a27] tracking-tight"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
+        >
           {category}
-        </h2>
+        </motion.h2>
       </div>
 
       <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {items.map((dish) => (
+        {items?.map((dish) => (
           <div
             key={dish.id}
             className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"

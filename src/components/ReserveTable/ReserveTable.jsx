@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useUser } from "../../context/userContext";
+import { motion } from "framer-motion";
 
 export default function ReserveTable() {
   const { user } = useUser();
@@ -56,7 +57,12 @@ export default function ReserveTable() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#faf9f6] px-4 pt-28 pb-10">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md"
+      >
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Reserve a Table
         </h2>
@@ -100,6 +106,7 @@ export default function ReserveTable() {
               type="date"
               name="date"
               {...formik.getFieldProps("date")}
+              min={new Date().toISOString().split("T")[0]} // يمنع اختيار تواريخ ماضية
               className="border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[#d4a373]"
             />
             {formik.touched.date && formik.errors.date ? (
@@ -120,15 +127,17 @@ export default function ReserveTable() {
             ) : null}
           </label>
 
-          <button
+          <motion.button
             type="submit"
             disabled={loading || formik.isSubmitting}
-            className="bg-[#d4a373] text-white font-semibold py-2 rounded hover:bg-[#b38b5e] transition duration-200 cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-[#d4a373] text-white font-semibold py-2 rounded hover:bg-[#b38b5e] transition duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading || formik.isSubmitting ? "Submitting..." : "Reserve"}
-          </button>
+          </motion.button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const categories = [
   "Appetizers",
@@ -14,11 +15,17 @@ const categories = [
 export default function Menu() {
   return (
     <div className="mt-[72px] py-16 bg-[#faf9f6]">
-      <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-12">
+      <motion.h2
+        className="text-3xl md:text-4xl font-serif font-bold text-center mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.8 }}
+      >
         Menu Categories
-      </h2>
+      </motion.h2>
       <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {categories.map((cat) => (
+        {categories?.map((cat) => (
           <Link
             key={cat}
             to={`/menu/${cat}`}

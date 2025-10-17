@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../Helper/supabase-client";
+import { motion } from "framer-motion";
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
@@ -34,11 +35,17 @@ export default function Testimonials() {
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#3E3B32] mb-12">
           What Our Customers Say
         </h2>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((t) => (
-            <div
+          {testimonials?.map((t) => (
+            <motion.div
               key={t.id}
-              className="bg-white p-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+              className="bg-white p-6 rounded-xl shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               <img
                 src={t.img}
@@ -49,7 +56,7 @@ export default function Testimonials() {
                 {t.name}
               </h3>
               <p className="text-sm text-gray-600 italic">"{t.review}"</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

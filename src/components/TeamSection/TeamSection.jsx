@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../Helper/supabase-client";
+import { motion } from "framer-motion";
 
 export default function TeamSection() {
   const [team, setTeam] = useState([]);
@@ -31,10 +32,15 @@ export default function TeamSection() {
           Meet Our Team
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {team.map((member) => (
-            <div
+          {team?.map((member) => (
+            <motion.div
               key={member.id}
-              className="bg-white p-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+              className="bg-white p-6 rounded-xl shadow-lg cursor-pointer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               <img
                 src={member.img}
@@ -45,7 +51,7 @@ export default function TeamSection() {
                 {member.name}
               </h3>
               <p className="text-sm text-gray-600">{member.role}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

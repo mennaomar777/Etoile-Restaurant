@@ -4,6 +4,7 @@ import { supabase } from "../../Helper/supabase-client";
 import { useCart } from "../../context/cartContext";
 import { toast } from "react-toastify";
 import { useUser } from "../../context/userContext";
+import { motion } from "framer-motion";
 
 export default function DishDetails() {
   const { addToCart } = useCart();
@@ -56,8 +57,15 @@ export default function DishDetails() {
           ← Back to Menu
         </button>
 
-        {/* Dish Flex Card */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row items-center md:items-start">
+        {/* Dish Flex Card with Motion */}
+        <motion.div
+          className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row items-center md:items-start"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          whileHover={{ scale: 1.02 }}
+        >
           {/* Dish Image */}
           <img
             src={dish.img}
@@ -68,7 +76,6 @@ export default function DishDetails() {
           {/* Dish Info */}
           <div className="p-6 md:p-10 md:w-1/2 flex flex-col justify-between">
             <div>
-              {/* Category */}
               <span className="text-sm font-medium text-[#C8A97E] mb-2 inline-block">
                 {dish.category}
               </span>
@@ -96,7 +103,6 @@ export default function DishDetails() {
                 </span>
               </div>
 
-              {/* Description */}
               <p className="text-gray-700 mb-6 leading-relaxed">
                 {dish.description}
               </p>
@@ -140,7 +146,7 @@ export default function DishDetails() {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

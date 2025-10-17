@@ -1,11 +1,13 @@
 import React from "react";
 import Slider from "react-slick";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import slide1 from "../../assets/slide1.jpg";
 import slide2 from "../../assets/slide2.jpg";
 import slide3 from "../../assets/slide3.jpg";
-import { Link } from "react-router-dom";
+
 export default function MainSlider() {
-  var settings = {
+  const settings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -23,8 +25,15 @@ export default function MainSlider() {
   return (
     <section className="relative mt-[72px]">
       <Slider {...settings}>
-        {slides.map((img, i) => (
-          <div key={i} className="relative">
+        {slides?.map((img, i) => (
+          <motion.div
+            key={i}
+            className="relative"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, delay: i * 0.3 }}
+          >
             <img
               src={img}
               alt={`slide-${i}`}
@@ -32,7 +41,13 @@ export default function MainSlider() {
             />
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-              <div className="text-center text-white px-4">
+              <motion.div
+                className="text-center text-white px-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              >
                 <h2 className="text-3xl md:text-5xl font-bold font-serif mb-4">
                   Welcome to Etoile
                 </h2>
@@ -42,17 +57,17 @@ export default function MainSlider() {
                 <div className="space-x-4">
                   <Link
                     to="/menu"
-                    className="bg-[#d4a373] inline-block shadow-md text-white font-semibold px-6 py-2 rounded-full hover:bg-[#b38b5e]  transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
+                    className="bg-[#d4a373] inline-block shadow-md text-white font-semibold px-6 py-2 rounded-full hover:bg-[#b38b5e] transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                   >
                     View Menu
                   </Link>
-                  <button className="bg-transparent border inline-block shadow-md text-white font-semibold px-6 py-2 rounded-full hover:bg-[#b38b5e]  transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer">
+                  <button className="bg-transparent border inline-block shadow-md text-white font-semibold px-6 py-2 rounded-full hover:bg-[#b38b5e] transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer">
                     Order Now
                   </button>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </Slider>
     </section>

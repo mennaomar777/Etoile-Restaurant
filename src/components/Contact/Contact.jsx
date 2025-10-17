@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { supabase } from "../../Helper/supabase-client";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 export default function Contact() {
   const initialValues = { name: "", email: "", message: "" };
@@ -44,14 +45,19 @@ export default function Contact() {
 
   return (
     <div className="mt-[72px] py-16 bg-[#faf9f6] min-h-[calc(100vh-72px)] flex flex-col items-center">
-      <form
+      <motion.form
         onSubmit={formik.handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg max-w-xl flex flex-col gap-6 w-[90%] md:w-full mx-auto"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
       >
         <h2 className="text-3xl font-bold text-center text-[#3E3B32]">
           Contact Us
         </h2>
 
+        {/* Name Field */}
         <div className="flex flex-col">
           <label htmlFor="name" className="mb-1 font-semibold text-gray-700">
             Name
@@ -77,6 +83,7 @@ export default function Contact() {
           )}
         </div>
 
+        {/* Email Field */}
         <div className="flex flex-col">
           <label htmlFor="email" className="mb-1 font-semibold text-gray-700">
             Email
@@ -102,6 +109,7 @@ export default function Contact() {
           )}
         </div>
 
+        {/* Message Field */}
         <div className="flex flex-col">
           <label htmlFor="message" className="mb-1 font-semibold text-gray-700">
             Message
@@ -127,6 +135,7 @@ export default function Contact() {
           )}
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
           disabled={formik.isSubmitting}
@@ -160,9 +169,16 @@ export default function Contact() {
             "Send Message"
           )}
         </button>
-      </form>
+      </motion.form>
 
-      <div className="w-[90%] md:w-full max-w-xl mt-8">
+      {/* Location Map */}
+      <motion.div
+        className="w-[90%] md:w-full max-w-xl mt-8"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
+      >
         <h3 className="text-2xl font-semibold text-[#3E3B32] text-center mb-4">
           Our Location
         </h3>
@@ -175,7 +191,7 @@ export default function Contact() {
           loading="lazy"
           className="rounded-lg shadow-md"
         ></iframe>
-      </div>
+      </motion.div>
     </div>
   );
 }

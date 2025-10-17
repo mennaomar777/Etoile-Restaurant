@@ -5,22 +5,26 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
 export default function CashCheckout() {
   const navigate = useNavigate();
   const { cartItems, totalPrice, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
+
   const initialValues = {
     user_name: "",
     phone: "",
     address: "",
   };
+
   const validationSchema = Yup.object({
     user_name: Yup.string().required("Name is required"),
     phone: Yup.string().required("Phone is required"),
     address: Yup.string().required("Address is required"),
   });
 
-  async function handleSubmit(values) {
+  const handleSubmit = async (values) => {
     setLoading(true);
     try {
       const { error } = await supabase.from("orders").insert([
@@ -46,7 +50,8 @@ export default function CashCheckout() {
     } finally {
       setLoading(false);
     }
-  }
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -54,11 +59,15 @@ export default function CashCheckout() {
   });
 
   return (
-    <div className="mt-[72px] py-16 flex flex-col items-center gap-6 min-h-[calc(100vh-72px)]">
+    <div className="mt-[72px] py-16 flex flex-col items-center gap-6 min-h-[calc(100vh-72px)] bg-[#faf9f6]">
       <h2 className="text-3xl font-bold mb-4">Cash Checkout</h2>
-      <form
+
+      <motion.form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-4 w-[80%] md:w-full max-w-md"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col gap-4 w-[80%] md:w-full max-w-md bg-white p-6 rounded-2xl shadow-lg"
       >
         <input
           type="text"
@@ -67,7 +76,7 @@ export default function CashCheckout() {
           value={formik.values.user_name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={`border px-4 py-2 rounded ${
+          className={`border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[#C8A97E] ${
             formik.touched.user_name && formik.errors.user_name
               ? "border-red-500"
               : "border-gray-300"
@@ -86,7 +95,7 @@ export default function CashCheckout() {
           value={formik.values.phone}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={`border px-4 py-2 rounded ${
+          className={`border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[#C8A97E] ${
             formik.touched.phone && formik.errors.phone
               ? "border-red-500"
               : "border-gray-300"
@@ -103,7 +112,7 @@ export default function CashCheckout() {
           value={formik.values.address}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={`border px-4 py-2 rounded ${
+          className={`border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[#C8A97E] ${
             formik.touched.address && formik.errors.address
               ? "border-red-500"
               : "border-gray-300"
@@ -113,14 +122,15 @@ export default function CashCheckout() {
           <span className="text-red-500 text-sm">{formik.errors.address}</span>
         )}
 
-        <button
+        <motion.button
           type="submit"
+          whileTap={{ scale: 0.95 }}
           disabled={loading}
-          className="bg-[#d4a373] text-white px-6 py-3 rounded hover:bg-[#b38b5e] disabled:opacity-50 cursor-pointer"
+          className="bg-[#d4a373] text-white px-6 py-3 rounded-xl hover:bg-[#b38b5e] disabled:opacity-50 cursor-pointer transition-all duration-300"
         >
           {loading ? "Placing Order..." : "Place Order"}
-        </button>
-      </form>
+        </motion.button>
+      </motion.form>
     </div>
   );
 }

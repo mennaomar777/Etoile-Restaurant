@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/cartContext";
 import { toast } from "react-toastify";
 import { useUser } from "../../context/userContext";
+import { motion } from "framer-motion";
+
 export default function FeaturedDishes() {
   const navigate = useNavigate();
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
   const { user } = useUser();
+
   async function fetchDishes() {
     setLoading(true);
     try {
@@ -22,6 +25,7 @@ export default function FeaturedDishes() {
       setLoading(false);
     }
   }
+
   useEffect(() => {
     fetchDishes();
   }, []);
@@ -32,18 +36,40 @@ export default function FeaturedDishes() {
         <span className="loader"></span>
       </div>
     );
+
+  const containerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.2 } },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <section className="py-16 bg-[#faf9f6]">
       <div className="container mx-auto px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#3E3B32] mb-12">
           Our Featured Dishes
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {dishes.map((dish) => (
-            <div
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          {dishes?.map((dish) => (
+            <motion.div
               key={dish.id}
               onClick={() => navigate(`menu/${dish.category}/dish/${dish.id}`)}
-              className="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer"
+              variants={cardVariants}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="bg-white shadow-lg rounded-xl overflow-hidden cursor-pointer"
             >
               <img
                 src={dish.img}
@@ -89,9 +115,9 @@ export default function FeaturedDishes() {
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

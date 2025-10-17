@@ -1,13 +1,20 @@
 import React from "react";
 import aboutImg from "../../assets/about.jpg";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function AboutTeaser() {
   return (
     <section className="py-16 bg-[#faf9f6]">
       <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         {/* Text Section */}
-        <div className="order-2 md:order-1">
+        <motion.div
+          className="order-2 md:order-1"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1 }}
+        >
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#3E3B32] mb-4">
             About Etoile
           </h2>
@@ -25,16 +32,22 @@ export default function AboutTeaser() {
           >
             Learn More
           </Link>
-        </div>
+        </motion.div>
 
         {/* Image Section */}
-        <div className="order-1 md:order-2">
+        <motion.div
+          className="order-1 md:order-2"
+          initial={{ opacity: 0, x: 80 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1 }}
+        >
           <img
             src={aboutImg}
             alt="About Etoile"
             className="rounded-xl shadow-lg object-cover w-full h-[400px] hover:scale-105 transition-transform duration-500"
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

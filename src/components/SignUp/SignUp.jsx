@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -39,7 +40,12 @@ export default function SignUp() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#faf9f6] px-4 pt-28 pb-10">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
+      <motion.div
+        className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Create Account
         </h2>
@@ -112,7 +118,7 @@ export default function SignUp() {
             Sign In
           </a>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }
