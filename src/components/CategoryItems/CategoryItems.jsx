@@ -111,7 +111,7 @@ export default function CategoryItems() {
                 onClick={() => {
                   if (!user) {
                     toast.error("Please sign in to add items to your cart!");
-                    navigate("/signin");
+                    navigate("/signIn");
                     return;
                   }
                   addToCart(dish);
