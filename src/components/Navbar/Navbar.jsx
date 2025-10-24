@@ -118,10 +118,10 @@ export default function Navbar() {
                   <>
                     <li>
                       <NavLink
-                        to="/signin"
+                        to="/signUp"
                         className="shadow-md md:block py-2 px-6 rounded-full bg-[#d4a373] text-white font-semibold hover:bg-[#b38b5e] transition-all duration-300 ease-in-out transform hover:scale-105"
                       >
-                        Sign In
+                        Sign up now
                       </NavLink>
                     </li>
                   </>
