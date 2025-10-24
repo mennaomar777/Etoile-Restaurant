@@ -13,4 +13,7 @@ if (typeof process === "undefined") {
   globalThis.process = { env: {} };
 }
 
+console.log("Supabase URL:", import.meta.env.VITE_SUPABASE_URL);
+console.log("Supabase KEY:", import.meta.env.VITE_SUPABASE_KEY);
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
